@@ -24,22 +24,22 @@ class Subject(models.Model):
     def __str__(self):
         return self.subject_name
 
-class SubjectTopic(models.Model):
+class Subject_Topic(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     topic_name = models.CharField(max_length=100, blank=True)
     topic_desc = models.CharField(max_length=255, blank=True)
     def __str__(self):
         return self.topic_name
 
-class TopicSubtopic(models.Model):
-    topic = models.ForeignKey(SubjectTopic, on_delete=models.CASCADE)
+class Topic_Subtopic(models.Model):
+    topic = models.ForeignKey(Subject_Topic, on_delete=models.CASCADE)
     subtopic_name = models.CharField(max_length=100, blank=True)
     subtopic_desc = models.CharField(max_length=255, blank=True)
     def __str__(self):
         return self.subtopic_name
 
-class SubtopicLearningUrl(models.Model):
-    subtopic = models.ForeignKey(TopicSubtopic, on_delete=models.CASCADE)
+class Subtopic_Learning_Url(models.Model):
+    subtopic = models.ForeignKey(Topic_Subtopic, on_delete=models.CASCADE)
     learning_url = models.CharField(max_length=255, blank=True)
     learning_url_desc = models.CharField(max_length=255, blank=True)
     learning_url_section_name = models.CharField(max_length=255, blank=True)
@@ -47,7 +47,7 @@ class SubtopicLearningUrl(models.Model):
     def __str__(self):
         return self.id
 
-class SubjectCourse(models.Model):
+class Subject_Course(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     course_url = models.CharField(max_length=255, blank=True)
     free_ind = models.CharField(max_length=1, choices=Free_ind_CHOICES)
@@ -57,15 +57,15 @@ class SubjectCourse(models.Model):
         return self.id
 
 
-class SubjectProject(models.Model):
+class Subject_Project(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     project_url = models.CharField(max_length=255, blank=True)
     project_desc = models.TextField(max_length=500, blank=True)
     def __str__(self):
         return self.id
 
-class LearningUrlVote(models.Model):
-    learning_url = models.ForeignKey(SubjectProject, on_delete=models.CASCADE)
+class Learning_Url_Vote(models.Model):
+    learning_url = models.ForeignKey(Subject_Project, on_delete=models.CASCADE)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     rating = models.IntegerField(default=1)
@@ -73,8 +73,8 @@ class LearningUrlVote(models.Model):
     def __str__(self):
         return self.id
 
-class ProjectVote(models.Model):
-    subject_project = models.ForeignKey(SubjectProject, on_delete=models.CASCADE)
+class Project_Vote(models.Model):
+    subject_project = models.ForeignKey(Subject_Project, on_delete=models.CASCADE)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     rating = models.IntegerField(default=1)
@@ -82,8 +82,8 @@ class ProjectVote(models.Model):
     def __str__(self):
         return self.id
 
-class CourseVote(models.Model):
-    subject_course = models.ForeignKey(SubjectProject, on_delete=models.CASCADE)
+class Course_Vote(models.Model):
+    subject_course = models.ForeignKey(Subject_Project, on_delete=models.CASCADE)
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     rating = models.IntegerField(default=1)
